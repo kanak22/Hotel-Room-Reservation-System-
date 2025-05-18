@@ -16,7 +16,7 @@ const RoomBooking = () => {
 
   const fetchBookings = async () => {
     try {
-      const response = await fetch("http://localhost:3000/api/bookings");
+      const response = await fetch("/api/bookings");
       const data = await response.json();
       const rooms = data.flatMap((booking) => booking.rooms);
       setBookedRooms(rooms);
@@ -37,7 +37,7 @@ const RoomBooking = () => {
     };
 
     try {
-      const response = await fetch("http://localhost:3000/api/bookings", {
+      const response = await fetch("/api/bookings", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -66,7 +66,7 @@ const RoomBooking = () => {
 
   const handleRandom = async () => {
     try {
-      await fetch("http://localhost:3000/api/generateRandomOccupancy", {
+      await fetch("/api/generateRandomOccupancy", {
         method: "POST",
       });
       await fetchBookings();
@@ -79,7 +79,7 @@ const RoomBooking = () => {
 
   const resetForm = async () => {
     try {
-      await fetch("http://localhost:3000/api/reset", {
+      await fetch("/api/reset", {
         method: "POST",
       });
       setGuestName("");
