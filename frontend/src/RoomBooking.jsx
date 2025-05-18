@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 
 const RoomBooking = () => {
+
+  const BASE_URL = "https://hotel-room-reservation-system-ce0m.onrender.com";
+
   const rows = 10;
   const cols = 10;
   const lastFloorRooms = 7;
@@ -16,7 +19,7 @@ const RoomBooking = () => {
 
   const fetchBookings = async () => {
     try {
-      const response = await fetch("/api/bookings");
+      const response = await fetch(`${BASE_URL}/api/bookings`);
       const data = await response.json();
       const rooms = data.flatMap((booking) => booking.rooms);
       setBookedRooms(rooms);
@@ -37,7 +40,8 @@ const RoomBooking = () => {
     };
 
     try {
-      const response = await fetch("/api/bookings", {
+      console.log()
+      const response = await fetch(`${BASE_URL}/api/bookings`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -66,7 +70,7 @@ const RoomBooking = () => {
 
   const handleRandom = async () => {
     try {
-      await fetch("/api/generateRandomOccupancy", {
+      await fetch(`${BASE_URL}/api/generateRandomOccupancy`, {
         method: "POST",
       });
       await fetchBookings();
@@ -79,7 +83,7 @@ const RoomBooking = () => {
 
   const resetForm = async () => {
     try {
-      await fetch("/api/reset", {
+      await fetch(`${BASE_URL}/api/reset`, {
         method: "POST",
       });
       setGuestName("");
