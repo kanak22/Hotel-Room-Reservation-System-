@@ -41,7 +41,7 @@ async function findOptimalRooms(numberOfRooms) {
       const maxFloor = availableFloors.filter(function(i){
           const currentFloor = i.floor;
           const maxFloor = -1;
-          return max(currentFloor, maxFloor);
+          return Math.max(currentFloor, maxFloor);
       })
 
       console.log("maxFloor:",maxFloor);
