@@ -33,7 +33,8 @@ async function findOptimalRooms(numberOfRooms) {
       const availableFloors = totalChoices.filter(function(i){
         if(i.available_rooms === maxAvailableRoom){
           return i;
-      });
+        }
+      })
 
       console.log("availableFloors:",availableFloors);
 
