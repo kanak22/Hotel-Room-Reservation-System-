@@ -11,11 +11,40 @@ async function findOptimalRooms(numberOfRooms) {
       HAVING COUNT(*) >= $1
       ORDER BY COUNT(*) DESC
     `;
-    
     const floorResult = await db.query(floorQuery, [numberOfRooms]);
+    
     console.log("floorResult:",floorResult);
     
     if (floorResult.rows.length > 0) {
+  //     [
+  //   { floor: 9, available_rooms: '7' },
+  //   { floor: 1, available_rooms: '7' },
+  //   { floor: 5, available_rooms: '6' },
+  //   { floor: 6, available_rooms: '6' },
+  //   { floor: 7, available_rooms: '6' },
+  //   { floor: 8, available_rooms: '5' },
+  //   { floor: 10, available_rooms: '5' },
+  //   { floor: 4, available_rooms: '4' },
+  //   { floor: 3, available_rooms: '4' }
+  // ],
+
+      const totalChoices = floorResult.rows;
+      const maxAvailableRoom = floorResult.rows[0].available_rooms;
+      const availableFloors = totalChoices.filter(function(i){
+        if(i.available_rooms === maxAvailableRoom){
+          return i;
+      });
+
+      console.log("availableFloors:",availableFloors);
+
+      const maxFloor = availableFloors.filter(function(i){
+          const currentFloor = i.floor;
+          const maxFloor = -1;
+          return max(currentFloor, maxFloor);
+      })
+
+      console.log("maxFloor:",maxFloor);
+      
       const floorWithMostRooms = floorResult.rows[0].floor;
 
       console.log("floorWithMostRooms:",floorWithMostRooms);
@@ -28,7 +57,7 @@ async function findOptimalRooms(numberOfRooms) {
         LIMIT $2
       `;
       
-      const roomsResult = await db.query(roomsQuery, [floorWithMostRooms, numberOfRooms]);
+      const roomsResult = await db.query(roomsQuery, [maxFloor, numberOfRooms]);
       console.log("roomsResult;",roomsResult);
       return roomsResult.rows;
     }
