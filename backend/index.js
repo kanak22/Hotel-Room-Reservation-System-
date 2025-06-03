@@ -84,6 +84,7 @@ app.post('/api/bookings', async (req, res) => {
     const availableRoomsQuery = 'SELECT * FROM rooms WHERE is_booked = FALSE ORDER BY floor, position_on_floor';
     const availableRoomsResult = await client.query(availableRoomsQuery);
     const optimalRooms = await findOptimalRooms(numberOfRooms);
+    console.log("optimalRooms:", optimalRooms);
 
     if (!optimalRooms || optimalRooms.length < numberOfRooms) {
       await client.query('ROLLBACK');
